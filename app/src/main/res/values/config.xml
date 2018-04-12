@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="host_address">http://47.254.200.203/api/ </string>
+    <string name="get_phone">get_phone.php</string>
+    <string name="get_code">get_verify.php</string>
+    <string name="confirm">confirm_phone.php</string>
+</resources>
