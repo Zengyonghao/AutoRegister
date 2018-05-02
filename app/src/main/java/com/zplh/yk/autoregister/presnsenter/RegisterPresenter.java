@@ -94,7 +94,7 @@ public class RegisterPresenter  {
             Thread.sleep(3000);
 
 
-        AdbUtils.click(233,194);
+        AdbUtils.click(256,197);
         Thread.sleep(1000);
         AdbUtils.putText(task.getNick());
 
@@ -102,7 +102,7 @@ public class RegisterPresenter  {
             Thread.sleep(3000);
 
         //点击手机号码
-        AdbUtils.click(306,294);
+        AdbUtils.click(314,334);
             Thread.sleep(1000);
 
         //因为不知原因的bug 将电话号码分成两部分输入
@@ -115,7 +115,7 @@ public class RegisterPresenter  {
         Thread.sleep(1000);
         registerCallback.onProgress(task,"输入了手机号");
 
-        AdbUtils.click(301,368);
+        AdbUtils.click(352,402);
 
         Thread.sleep(1000);
 
@@ -125,7 +125,6 @@ public class RegisterPresenter  {
 
         AdbUtils.putText(task.getPwd().substring(5,task.getPwd().length()));
         registerCallback.onProgress(task,"输入了密码");
-        AdbUtils.back();
 
         Thread.sleep(1000);
         NodeUtils.clickNode("com.tencent.mm:id/cbt");
