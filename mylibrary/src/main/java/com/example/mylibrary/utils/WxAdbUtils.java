@@ -8,28 +8,49 @@ import android.text.TextUtils;
 
 public class WxAdbUtils {
     public static boolean openWx() {
-        ShellUtils.CommandResult commandResult = ShellUtils.execCommand("am start com.tencent.mm/com.tencent.mm.ui.LauncherUI", true);
 
-        return commandResult.result == 0;
+
+        ShellUtils.CommandResult commandResult2 = ShellUtils.execCommand("am start com.tencent.mm/com.tencent.mm.ui.LauncherUI", true);
+
+        return commandResult2.result == 0;
 
     }
+
+
+
+
 
     public static boolean closeWx() {
+
+
         ShellUtils.CommandResult commandResult = ShellUtils.execCommand("am force-stop com.tencent.mm", true);
+
+
         return commandResult.result == 0;
     }
 
 
-    public static boolean clickRegister() {
+    public static boolean clickRegister() throws InterruptedException {
+
+
         String xmlData = AdbUtils.dumpXml2String();
         if (TextUtils.isEmpty(xmlData))
             return false;
-        if (!xmlData.contains("注册"))
-            return false;
-        if (AdbUtils.click4xy(266,752,450,824)) {
-            return true;
+        if (!xmlData.contains("com.tencent.mm:id/cgv")) {
+            ShellUtils.CommandResult commandResult = ShellUtils.execCommand("am start com.tencent.mm/.ui.account.RegByMobileRegAIOUI", true);
         }
-        return false;
+
+        Thread.sleep(2000);
+        if (!AdbUtils.dumpXml2String().contains("com.tencent.mm:id/cgv"))
+            return false;
+
+        NodeUtils.clickNode("com.tencent.mm:id/cgv" );
+        if (AdbUtils.dumpXml2String().contains("com.mediatek.security:id/checkbox")){
+            NodeUtils.clickNode("com.mediatek.security:id/checkbox");
+            NodeUtils.clickNode("android:id/button1");
+        }
+
+            return true;
     }
 
     public static void cleanData() {

@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+   <EditText
+       android:id="@+id/et"
+       android:textColor="@android:color/white"
+       android:inputType="phone"
+       android:layout_width="match_parent"
+       android:layout_height="50dp"/>
 
     <TextView
         android:id="@+id/tv_go_register"
-        android:layout_centerInParent="true"
-        android:padding="5dp"
-        android:background="@android:color/white"
-        android:text="点击开始注册"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp"
+        android:background="@android:color/white"
+        android:padding="5dp"
+        android:text="点击开始注册"/>
 
 </RelativeLayout>

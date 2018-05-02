@@ -20,6 +20,11 @@ public class RegisterModule extends BaseModule<RegisterTask> {
     //执行注册流程
     @Override
     public void run() {
-        registerPresenter.execute(task);
+        try {
+            registerPresenter.execute(task);
+        } catch (Exception e) {
+            e.printStackTrace();
+            registerPresenter.getRegisterCallback().onError(task,"程序错误");
+        }
     }
 }

@@ -12,12 +12,14 @@ android {
             enabled true
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     buildToolsVersion '27.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -27,7 +29,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':mylibrary')
     compile 'com.jakewharton:butterknife:8.8.1'

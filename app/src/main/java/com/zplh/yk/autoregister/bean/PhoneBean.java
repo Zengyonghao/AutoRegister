@@ -17,6 +17,7 @@ public class PhoneBean {
     private int status;
     private String info;
     private DataBean data;
+    private String msg;
 
     public int getStatus() {
         return status;
@@ -42,6 +43,15 @@ public class PhoneBean {
         this.data = data;
     }
 
+    public PhoneBean setMsg(String msg) {
+        this.msg = msg;
+        return this;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
     public static class DataBean {
         /**
          * phone : 1112909013
@@ -50,6 +60,16 @@ public class PhoneBean {
 
         private String phone;
         private String nick;
+        private int state;
+
+        public int getState() {
+            return state;
+        }
+
+        public DataBean setState(int state) {
+            this.state = state;
+            return this;
+        }
 
         public String getPhone() {
             return phone;

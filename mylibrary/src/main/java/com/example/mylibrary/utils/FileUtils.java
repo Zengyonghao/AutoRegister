@@ -29,20 +29,17 @@ public class FileUtils {
         File file = new File(path);
         //如果path是传递过来的参数，可以做一个非目录的判断
         if (file.isDirectory()) {
-            Log.d("TestFile", "The File doesn't not exist.");
         } else {
             try {
                 InputStream instream = new FileInputStream(file);
-                if (instream != null) {
-                    InputStreamReader inputreader = new InputStreamReader(instream);
-                    BufferedReader buffreader = new BufferedReader(inputreader);
-                    String line;
-                    //分行读取
-                    while ((line = buffreader.readLine()) != null) {
-                        builder.append(line + "\n");
-                    }
-                    instream.close();
+                InputStreamReader inputreader = new InputStreamReader(instream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                String line;
+                //分行读取
+                while ((line = buffreader.readLine()) != null) {
+                    builder.append(line).append("\n");
                 }
+                instream.close();
             } catch (java.io.FileNotFoundException e) {
                 Log.d("TestFile", "The File doesn't not exist.");
             } catch (IOException e) {
