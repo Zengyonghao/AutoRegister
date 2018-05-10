@@ -12,6 +12,7 @@ public class NetAddressUtils {
        String hostString =  MyApplication.application.getString(R.string.host_address);
        String url = MyApplication.application.getString(R.string.get_code);
        return hostString.concat(url);
+
     }
 
 }

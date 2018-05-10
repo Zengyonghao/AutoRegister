@@ -17,6 +17,7 @@ public class RegisterModule extends BaseModule<RegisterTask> {
         registerPresenter = presenter;
     }
 
+
     //执行注册流程
     @Override
     public void run() {

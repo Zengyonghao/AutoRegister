@@ -6,7 +6,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
@@ -39,7 +38,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Response;
 
@@ -54,6 +52,8 @@ public class MainActivity extends BaseActivity implements RegisterCallback, List
     private final Deque<RegisterModule> readyTasks = new ArrayDeque<>();
     @BindView(R.id.et)
     EditText et;
+    @BindView(R.id.tv_stop_register)
+    TextView tvStopRegister;
     private ExecutorService pool = Executors.newSingleThreadExecutor();
     private RegisterPresenter registerPresenter;
     private Future<?> currentFuture;
@@ -87,6 +87,9 @@ public class MainActivity extends BaseActivity implements RegisterCallback, List
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        tvStopRegister.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     @Override
@@ -105,36 +108,36 @@ public class MainActivity extends BaseActivity implements RegisterCallback, List
 
         String trim = et.getText().toString().trim();
         RegisterTask registerTask = new RegisterTask(trim, DEFAULT_PWD, "test2");
-                                RegisterModule registerModule = new RegisterModule(registerTask, registerPresenter);
-                                currentFuture = pool.submit(registerModule);
-//        OkHttpUtils.get().url(getString(R.string.host_address).concat(getString(R.string.get_phone))).build().execute(new StringCallback() {
-//            @Override
-//            public void onError(Call call, Exception e, int i) {
-//                Logger.t("获取电话号码失败").d("错误原因=" + e.getMessage());
-//            }
-//
-//            @Override
-//            public void onResponse(String s, int i) {
-//
-//                Logger.t("获取电话号码").d(s);
-//                try {
-//                    PhoneBean phoneBean = JSON.parseObject(s, PhoneBean.class);
-//                    if (phoneBean == null || phoneBean.getStatus() != 1 || TextUtils.isEmpty(phoneBean.getData().getNick())) {
-//                        Logger.t("获取电话号码失败").d("state=" + phoneBean.getInfo());
-//                        Toast.makeText(MainActivity.this, "没有电话号码了", Toast.LENGTH_SHORT).show();
-//
-//                    } else {
-//                        phoneBean.getData().setState(2);
-//                        datas.add(phoneBean);
-//                        Logger.t("电话号码").d(phoneBean.getData().getPhone());
-//                        RegisterTask registerTask = new RegisterTask(phoneBean.getData().getPhone(), DEFAULT_PWD, phoneBean.getData().getNick());
-//                        RegisterModule registerModule = new RegisterModule(registerTask, registerPresenter);
-//                        currentFuture = pool.submit(registerModule);
-//                    }
-//                } catch (IllegalStateException e) {
-//                }
-//            }
-//        });
+        RegisterModule registerModule = new RegisterModule(registerTask, registerPresenter);
+        currentFuture = pool.submit(registerModule);
+        //        OkHttpUtils.get().url(getString(R.string.host_address).concat(getString(R.string.get_phone))).build().execute(new StringCallback() {
+        //            @Override
+        //            public void onError(Call call, Exception e, int i) {
+        //                Logger.t("获取电话号码失败").d("错误原因=" + e.getMessage());
+        //            }
+        //
+        //            @Override
+        //            public void onResponse(String s, int i) {
+        //
+        //                Logger.t("获取电话号码").d(s);
+        //                try {
+        //                    PhoneBean phoneBean = JSON.parseObject(s, PhoneBean.class);
+        //                    if (phoneBean == null || phoneBean.getStatus() != 1 || TextUtils.isEmpty(phoneBean.getData().getNick())) {
+        //                        Logger.t("获取电话号码失败").d("state=" + phoneBean.getInfo());
+        //                        Toast.makeText(MainActivity.this, "没有电话号码了", Toast.LENGTH_SHORT).show();
+        //
+        //                    } else {
+        //                        phoneBean.getData().setState(2);
+        //                        datas.add(phoneBean);
+        //                        Logger.t("电话号码").d(phoneBean.getData().getPhone());
+        //                        RegisterTask registerTask = new RegisterTask(phoneBean.getData().getPhone(), DEFAULT_PWD, phoneBean.getData().getNick());
+        //                        RegisterModule registerModule = new RegisterModule(registerTask, registerPresenter);
+        //                        currentFuture = pool.submit(registerModule);
+        //                    }
+        //                } catch (IllegalStateException e) {
+        //                }
+        //            }
+        //        });
     }
 
 
@@ -213,11 +216,7 @@ public class MainActivity extends BaseActivity implements RegisterCallback, List
         runOnUiThread(this::applyTask);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-    }
+
 
     @Override
     public void onClick(PhoneBean phoneBean, int position) {

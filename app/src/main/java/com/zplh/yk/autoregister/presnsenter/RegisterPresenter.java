@@ -55,14 +55,20 @@ public class RegisterPresenter  {
             Thread.sleep(5000 );
 
 
-        if (!WxAdbUtils.clickRegister()) {
+        if (!WxAdbUtils.goRegister()) {
             registerCallback.onError(task,"点击注册失败");
             return;
         }
 
 
         registerCallback.onProgress(task,"进入了注册");
-            Thread.sleep(5000);
+            Thread.sleep(2000);
+
+        AdbUtils.putText(task.getNick());
+
+        registerCallback.onProgress(task,"输入了昵称");
+        Thread.sleep(1000);
+
 
 
         //打开地区选择
@@ -71,39 +77,35 @@ public class RegisterPresenter  {
             return;
         }
 
+
         //进入国家地区
         NodeUtils.clickNode("com.tencent.mm:id/qa");
         registerCallback.onProgress(task,"进入国家地区");
 
             Thread.sleep(5000);
+
         //打开地区选择
-        if (!AdbUtils.dumpXml2String().contains("com.tencent.mm:id/at")) {
+        if (!AdbUtils.dumpXml2String().contains("com.tencent.mm:id/a2u")) {
             registerCallback.onError(task,"未进入国家地区");
             return;
         }
         //点击搜索
         NodeUtils.clickNode("com.tencent.mm:id/at");
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         AdbUtils.putText("Malaysia");
         registerCallback.onProgress(task,"筛选了马来西亚");
-            Thread.sleep(5000);
+            Thread.sleep(1000);
 
-        AdbUtils.click(356,215);
+        NodeUtils.clickNode("com.tencent.mm:id/a2s");
         registerCallback.onProgress(task,"成功选择了马来西亚");
 
-            Thread.sleep(3000);
+            Thread.sleep(1000);
 
-
-        AdbUtils.click(256,197);
-        Thread.sleep(1000);
-        AdbUtils.putText(task.getNick());
-
-        registerCallback.onProgress(task,"输入了昵称");
-            Thread.sleep(3000);
 
         //点击手机号码
-        AdbUtils.click(314,334);
-            Thread.sleep(1000);
+        NodeUtils.clickNode("com.tencent.mm:id/bun");
+         //点击一下清除
+        AdbUtils.click(485,339);
 
         //因为不知原因的bug 将电话号码分成两部分输入
 
@@ -115,9 +117,9 @@ public class RegisterPresenter  {
         Thread.sleep(1000);
         registerCallback.onProgress(task,"输入了手机号");
 
-        AdbUtils.click(352,402);
+        //输入密码
+        AdbUtils.click(279,406);
 
-        Thread.sleep(1000);
 
         AdbUtils.putText(task.getPwd().substring(0,5));
 
@@ -126,25 +128,24 @@ public class RegisterPresenter  {
         AdbUtils.putText(task.getPwd().substring(5,task.getPwd().length()));
         registerCallback.onProgress(task,"输入了密码");
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         NodeUtils.clickNode("com.tencent.mm:id/cbt");
         Thread.sleep(20000);
 
 
-
+//        if (AdbUtils.dumpXml2String().contains("check")){
+//            registerCallback.onError(task,"需要验证");
+//            return;
+//        }
             if (!AdbUtils.dumpXml2String().contains("Confirmation")) {
             registerCallback.onError(task,"手机号码错误");
             return;
         }
 
-        if (AdbUtils.dumpXml2String().contains("check")){
-                registerCallback.onError(task,"需要验证");
-            return;
-            }
 
 
 
-        AdbUtils.click(356,549);//点击确定
+        NodeUtils.clickNode("com.tencent.mm:id/ad8");
         registerCallback.onProgress(task,"发送验证码");
         Thread.sleep(40000);
         if (AdbUtils.dumpXml2String().contains("later")){
@@ -172,18 +173,11 @@ public class RegisterPresenter  {
             return;
         }
         registerCallback.onProgress(task,"获取了验证码");
-        AdbUtils.click(266,317);//点击输入验证码
+        NodeUtils.clickNode("com.tencent.mm:id/gz");
         AdbUtils.putText(code);
             Thread.sleep(1000);
-        AdbUtils.click(262,491);//下一步
-
+            NodeUtils.clickNode("com.tencent.mm:id/ac6");
             Thread.sleep(15000);
-
-
-
-
-
-
         //号如果已经注册过 欢迎回来
         if (AdbUtils.dumpXml2String().contains("Yes, log in now")) {
             registerCallback.onError(task,"手机号被注册过");
@@ -197,9 +191,7 @@ public class RegisterPresenter  {
 
     }
 
-    private void goRegister() { //前往注册
 
-    }
 
     //递归获取验证码
     private String getCode(String phone,int number) throws IOException, InterruptedException {
