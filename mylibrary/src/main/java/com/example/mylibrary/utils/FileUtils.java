@@ -3,6 +3,8 @@ package com.example.mylibrary.utils;
 import android.os.Environment;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,6 +48,7 @@ public class FileUtils {
                 Log.d("TestFile", e.getMessage());
             }
         }
+        Logger.t("xml").d(builder.toString());
         return builder.toString();
     }
 }

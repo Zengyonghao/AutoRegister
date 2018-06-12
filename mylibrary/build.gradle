@@ -33,7 +33,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile files('libs/fastjson-1.2.47.jar')
     compile files('libs/bugly_crash_release.jar')
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compile 'com.orhanobut:logger:2.2.0'
 }
 repositories {
     mavenCentral()

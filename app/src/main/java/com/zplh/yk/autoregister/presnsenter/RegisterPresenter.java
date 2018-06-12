@@ -52,7 +52,8 @@ public class RegisterPresenter  {
             return;
         }
         registerCallback.onProgress(task,"打开了微信");
-            Thread.sleep(5000 );
+            Thread.sleep(3000 );
+
 
 
         if (!WxAdbUtils.goRegister()) {
@@ -60,9 +61,23 @@ public class RegisterPresenter  {
             return;
         }
 
+        Thread.sleep(3000);
+
+
+
 
         registerCallback.onProgress(task,"进入了注册");
-            Thread.sleep(2000);
+
+        String s = AdbUtils.dumpXml2String();
+        if (s.contains("安全警告")) {
+
+            NodeUtils.clickNode("com.mediatek.security:id/checkbox");
+
+
+            NodeUtils.clickNode("android:id/button1");
+        }
+
+
 
         AdbUtils.putText(task.getNick());
 
@@ -71,32 +86,23 @@ public class RegisterPresenter  {
 
 
 
-        //打开地区选择
-        if (!AdbUtils.dumpXml2String().contains("com.tencent.mm:id/qa")) {
-            registerCallback.onError(task,"未进入注册");
-            return;
-        }
 
 
         //进入国家地区
-        NodeUtils.clickNode("com.tencent.mm:id/qa");
+        NodeUtils.clickNode("com.tencent.mm:id/vk");
         registerCallback.onProgress(task,"进入国家地区");
 
-            Thread.sleep(5000);
+            Thread.sleep(3000);
 
-        //打开地区选择
-        if (!AdbUtils.dumpXml2String().contains("com.tencent.mm:id/a2u")) {
-            registerCallback.onError(task,"未进入国家地区");
-            return;
-        }
+
         //点击搜索
-        NodeUtils.clickNode("com.tencent.mm:id/at");
+        AdbUtils.click(525,87);
             Thread.sleep(1000);
-        AdbUtils.putText("Malaysia");
+        AdbUtils.putText("malaixiya");
         registerCallback.onProgress(task,"筛选了马来西亚");
             Thread.sleep(1000);
 
-        NodeUtils.clickNode("com.tencent.mm:id/a2s");
+        NodeUtils.clickNode("com.tencent.mm:id/a9s");
         registerCallback.onProgress(task,"成功选择了马来西亚");
 
             Thread.sleep(1000);

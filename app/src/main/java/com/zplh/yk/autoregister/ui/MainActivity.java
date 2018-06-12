@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -89,6 +90,12 @@ public class MainActivity extends BaseActivity implements RegisterCallback, List
         }
         tvStopRegister.setOnClickListener(v -> {
             finish();
+        });
+        tvStopRegister.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return false;
+            }
         });
     }
 
